@@ -1,0 +1,3 @@
+[submodule "git-packages/distel"]
+	path = git-packages/distel
+	url = https://github.com/bottleneko/distel.git
