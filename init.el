@@ -2,6 +2,31 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 
+(defun greek-transliteration ()
+  (interactive)
+  (let ((key (read-key "Enter symbol to translite them into Greek: ")))
+    (cond ((eq key ?a) (insert "α"))
+          ((eq key ?b) (insert "β"))
+          ((eq key ?g) (insert "γ"))
+          ((eq key ?d) (insert "δ"))
+          ((eq key ?e) (insert "ε"))
+          ((eq key ?z) (insert "ζ"))
+          ((eq key ?h) (insert "η"))
+          ((eq key ?o) (insert "ω"))
+          ((eq key ?i) (insert "ι"))
+          ((eq key ?k) (insert "κ"))
+          ((eq key ?l) (insert "λ"))
+          ((eq key ?m) (insert "μ"))
+          ((eq key ?n) (insert "ν"))
+          ((eq key ?x) (insert "ξ"))
+          ((eq key ?p) (insert "π"))
+          ((eq key ?r) (insert "ρ"))
+          ((eq key ?s) (insert "σ"))
+          ((eq key ?t) (insert "τ"))
+          ((eq key ?f) (insert "φ")))))
+
+(define-key global-map (kbd "M-g s") 'greek-transliteration)
+
 ;;;;;;;;;;;;;;;
 ;; Encoding
 ;;;;;;;;;;;;;;;
@@ -66,7 +91,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (evil bash-completion markdown-mode markdown-preview-mode 0blayout ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang auto-complete-distel ac-helm ac-etags))))
+    (rust-mode evil bash-completion markdown-mode markdown-preview-mode 0blayout ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang auto-complete-distel ac-helm ac-etags))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
