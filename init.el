@@ -55,8 +55,14 @@
       (process-send-string proc text)
       (process-send-eof proc))))
 
-(setq interprogram-cut-function 'paste-to-osx)
-(setq interprogram-paste-function 'copy-from-osx)
+(if (memq window-system '(mac ns x))
+    (progn
+      (setq interprogram-cut-function 'paste-to-osx)
+      (setq interprogram-paste-function 'copy-from-osx))
+  (progn
+    (require 'xclip)
+    (xclip-mode 1)))
+
 
 ;;;;;;;;;;;;;;;
 ;; mac OS iTerm2 compability
@@ -91,7 +97,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (rust-mode evil bash-completion markdown-mode markdown-preview-mode 0blayout ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang auto-complete-distel ac-helm ac-etags))))
+    (xclip rust-mode evil bash-completion markdown-mode markdown-preview-mode 0blayout ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang auto-complete-distel ac-helm ac-etags))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
