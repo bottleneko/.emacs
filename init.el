@@ -95,8 +95,12 @@
 ;; Useful
 ;;;;;;;;;;;;;;;
 
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+
 (use-package ivy
-  :requires (swiper)
   :bind ("C-s" . swiper)
   :init
   (ivy-mode +1))
@@ -133,11 +137,11 @@
   (abbrev-mode)
   (add-hook 'after-init-hook 'global-company-mode))
 
-(use-package org
-  :bind (:map org-mode-map
-              ("C-k l" . org-store-link)
-              ("C-k a" . org-agenda)
-              ("C-k c" . org-capture)))
+;(use-package org
+;  :bind (:map org-mode-map
+;              ("C-k l" . org-store-link)
+;              ("C-k a" . org-agenda)
+;              ("C-k c" . org-capture)))
 
 (global-auto-revert-mode +1)
 
