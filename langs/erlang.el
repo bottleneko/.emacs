@@ -7,7 +7,6 @@
 ;;;;;;;;;;;;;;;
 
 (use-package erlang
-  :requires (flycheck)
   :mode (("\\.erl\\'"     . erlang-mode)
          ("\\.hrl\\'"     . erlang-mode)
          ("\\.xrl\\'"     . erlang-mode)
@@ -23,25 +22,23 @@
                ("C-c ;"   . ivy-erlang-complete)))
   :hook ((after-save  . ivy-erlang-complete-reparse)
          (erlang-mode . ivy-erlang-complete-init)
-         (erlang-mode . ivy-mode)
-         (erlang-mode . ivy-erlang-complete-init)
          (erlang-mode . flycheck-mode))
   :custom ((ivy-erlang-complete-erlang-root "~/.kerl/installations/21.2/")
+           (ivy-erlang-complete-ignore-dirs '(".git"))
            (erlang-root-dir                 "~/.kerl/builds/21.2/release_21.2/")
            (indent-tabs-mode                nil)
            (erlang-indent-level             2)
 	         (erlang-tab-always-indent        nil))
   :init
-  (add-to-list 'exec-path "~/.kerl/builds/21.2/release_21.2/bin")
-  (flycheck-select-checker 'erlang-otp))
+  (add-to-list 'exec-path "~/.kerl/builds/21.2/release_21.2/bin"))
 
 ;;;;;;;;;;;;;;;
 ;; Flycheck
 ;;;;;;;;;;;;;;;
 
 (use-package flycheck
-  :requires (flycheck)
   :init
+  (require 'flycheck)
   (flycheck-define-checker erlang-otp
     "Erang/OTP syntax checker"
     :command ("~/.emacs.d/git-packages/syntaxerl/syntaxerl" source)
