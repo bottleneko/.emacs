@@ -14,7 +14,7 @@
 (require 'flycheck)
 (require 'subr-x)
 (require 'evil)
-(require 'evil-lion)
+(require 'evil-lion)`
 ; (require 'wrangler)
 
 ;;;;;;;;;;;;;;;
@@ -125,9 +125,9 @@
 		    (erlang-indent-region beg (point)))))
 
 (bind-keys :map erlang-mode-map
-	   :prefix "C-c"
+	         :prefix "C-c"
            :prefix-map mode-specific-map
            ("b"   . erlang/wrap-word-into-binary)
-	   ("m b" . erlang/wrap-multiline-into-binary)
-	   ("a"   . evil-lion-left)
-	   ("A"   . evil-lion-right))
+	         ("m b" . erlang/wrap-multiline-into-binary)
+	         ("a"   . evil-lion-left)
+	         ("A"   . evil-lion-right))
