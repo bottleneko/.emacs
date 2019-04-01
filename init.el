@@ -1,3 +1,35 @@
+;;;;;;;;;;;;;;;
+;; Package list 
+;;;;;;;;;;;;;;;
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(package-initialize)
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (php-mode mustache-mode code-stats xclip rust-mode evil bash-completion markdown-mode markdown-preview-mode 0blayout ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang auto-complete-distel ac-helm ac-etags))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(require 'code-stats)
+(setq code-stats-token "SFMyNTY.WW05MGRHeGxibVZyYnc9PSMjTWpVMk5nPT0.QJdH6Y7Z9muQI9C0ReDRhDflGjsIeuEMaITKfdSDmLg")
+(add-hook 'prog-mode-hook #'code-stats-mode)
+(add-hook 'yaml-mode-hook #'code-stats-mode)
+(run-with-idle-timer 30 t #'code-stats-sync)
+(add-hook 'kill-emacs-hook (lambda () (code-stats-sync :wait)))
+
 (menu-bar-mode -1)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
@@ -38,7 +70,14 @@
 ;;;;;;;;;;;;;;;
 ;; PATH env settings
 ;;;;;;;;;;;;;;;
-(setenv "SHELL" "/usr/local/bin/zsh")
+
+(defun trim-string (string)
+  "Remove white spaces in beginning and ending of STRING.
+White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
+  (replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string "[ \t\n]*\\'" "" string))
+  )
+
+(setenv "SHELL" (trim-string (shell-command-to-string "type zsh | awk '{ print $3 }'")))
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
@@ -82,36 +121,13 @@
 (global-set-key "\M-\\" 'comint-dynamic-complete-filename)
 
 ;;;;;;;;;;;;;;;
-;; Package list 
-;;;;;;;;;;;;;;;
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
-(package-initialize)
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (xclip rust-mode evil bash-completion markdown-mode markdown-preview-mode 0blayout ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang auto-complete-distel ac-helm ac-etags))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-;;;;;;;;;;;;;;;
 ;; AC
 ;;;;;;;;;;;;;;;
 (require 'auto-complete)
 
 (require 'auto-complete-config)
 (ac-config-default)
+(add-to-list 'ac-modes 'yaml-mode)
 
 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
 
