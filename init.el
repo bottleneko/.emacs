@@ -14,7 +14,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ivy-erlang-complete magit dashboard flyspell-correct-ivy all-the-icons-ivy counsel-projectile ivy-gitlab ivy-xref ivy-yasnippet company company-web use-package xclip latex-pretty-symbols latex-preview-pane dockerfile-mode haskell-mode rust-mode evil bash-completion markdown-mode markdown-preview-mode ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang))))
+    (counsel ivy ivy-erlang-complete magit dashboard flyspell-correct-ivy all-the-icons-ivy counsel-projectile ivy-gitlab ivy-xref ivy-yasnippet company company-web use-package xclip latex-pretty-symbols latex-preview-pane dockerfile-mode haskell-mode rust-mode evil bash-completion markdown-mode markdown-preview-mode ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -44,12 +44,15 @@
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+(defun trim-string (string)
+  "Remove white spaces in beginning and ending of STRING.
+White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
+  (replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string "[ \t\n]*\\'" "" string)))
+
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
   :init
-  (setenv "SHELL" "/usr/local/bin/zsh")
-  :config
-  (exec-path-from-shell-initialize))
+  (setenv "SHELL" (trim-string (shell-command-to-string "type zsh | awk '{ print $3 }'"))))
 
 ;;;;;;;;;;;;;;;
 ;; Copy-paste
@@ -154,6 +157,17 @@
 ;;;;;;;;;;;;;;;
 ;; Fancy stuff 
 ;;;;;;;;;;;;;;;
+
+(use-package code-stats
+  :if (getenv "CODESTATS_TOKEN")
+	:config
+	(setq code-stats-token (getenv "CODESTATS_TOKEN"))
+	:hook 
+	((prog-mode . code-stats-mode)
+	 (yaml-mode . code-stats-mode)
+	 (kill-emacs .(lambda () (code-stats-sync :wait))))
+	:init
+	(run-with-idle-timer 30 t #'code-stats-sync))
 
 (load "~/.emacs.d/firacode.el")
 
