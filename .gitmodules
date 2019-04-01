@@ -1,3 +1,6 @@
 [submodule "git-packages/distel"]
 	path = git-packages/distel
 	url = https://github.com/bottleneko/distel.git
+[submodule "git-packages/syntaxerl"]
+	path = git-packages/syntaxerl
+	url = https://github.com/ten0s/syntaxerl.git
