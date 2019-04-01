@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;
-;; Packages 
+;; Packages
 ;;;;;;;;;;;;;;;
 
 (require 'package)
@@ -14,7 +14,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (counsel ivy ivy-erlang-complete magit dashboard flyspell-correct-ivy all-the-icons-ivy counsel-projectile ivy-gitlab ivy-xref ivy-yasnippet company company-web use-package xclip latex-pretty-symbols latex-preview-pane dockerfile-mode haskell-mode rust-mode evil bash-completion markdown-mode markdown-preview-mode ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang))))
+    (code-stats counsel ivy ivy-erlang-complete magit dashboard flyspell-correct-ivy all-the-icons-ivy counsel-projectile ivy-gitlab ivy-xref ivy-yasnippet company company-web use-package xclip latex-pretty-symbols latex-preview-pane dockerfile-mode haskell-mode rust-mode evil bash-completion markdown-mode markdown-preview-mode ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -53,6 +53,14 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   :if (memq window-system '(mac ns))
   :init
   (setenv "SHELL" (trim-string (shell-command-to-string "type zsh | awk '{ print $3 }'"))))
+
+(use-package prog-mode
+  :custom
+  (prettify-symbols-unprettify-at-point t)
+  :init
+  (global-prettify-symbols-mode +1))
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;;;;;;;;;;;;;;
 ;; Copy-paste
@@ -149,20 +157,20 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-auto-revert-mode +1)
 
 ;;;;;;;;;;;;;;;
-;; Langs 
+;; Langs
 ;;;;;;;;;;;;;;;
 
 (load "~/.emacs.d/langs/erlang.el")
 
 ;;;;;;;;;;;;;;;
-;; Fancy stuff 
+;; Fancy stuff
 ;;;;;;;;;;;;;;;
 
 (use-package code-stats
   :if (getenv "CODESTATS_TOKEN")
 	:config
 	(setq code-stats-token (getenv "CODESTATS_TOKEN"))
-	:hook 
+	:hook
 	((prog-mode . code-stats-mode)
 	 (yaml-mode . code-stats-mode)
 	 (kill-emacs .(lambda () (code-stats-sync :wait))))
