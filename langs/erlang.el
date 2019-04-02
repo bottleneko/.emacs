@@ -19,7 +19,8 @@
   :bind (:map erlang-mode-map
               (("C-c b"   . erlang/wrap-word-into-binary)
 	             ("C-c m b" . erlang/wrap-multiline-into-binary)
-               ("C-c ;"   . ivy-erlang-complete)))
+               ("C-c ;"   . ivy-erlang-complete)
+               ("M-/"     . ivy-erlang-complete-find-references)))
   :hook ((after-save  . ivy-erlang-complete-reparse)
          (erlang-mode . ivy-erlang-complete-init)
          (erlang-mode . flycheck-mode))
@@ -46,20 +47,6 @@
     ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
      (error line-start (file-name) ":" line ": " (message) line-end))
     :modes (erlang-mode)))
-
-;; При переключении на distel ie session erlang-otp (FlyCheck checker)
-;; падает с кодом ошибки 1 при каждом изменении буффера что немного
-;; нервирует, посему при переходе во все подобные буффера flycheck-mode
-;; будет отключаться 
-;(add-hook 'switch-buffer-functions
-;	  (lambda (prev cur)
-;	    (unless (and
-;               (eq (string-match "ie session" (format "%S" cur)) nil)
-;			          (eq (string-match ".hrl"       (format "%S" cur)) nil)
-;			          (eq (string-match ".app.src"   (format "%S" cur)) nil)
-;			          (eq (string-match ".src"       (format "%S" cur)) nil)
-;			          (eq (string-match ".config"    (format "%S" cur)) nil))
-;	      (flycheck-mode -1))))
 
 ;;;;;;;;;;;;;;;
 ;; Helpers
