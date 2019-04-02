@@ -1,7 +1,3 @@
-; (add-to-list 'load-path "~/.emacs.d/lib/erlang/lib/wrangler-1.2.0/elisp")
-
-; (require 'wrangler)
-
 ;;;;;;;;;;;;;;;
 ;; Major mode
 ;;;;;;;;;;;;;;;
@@ -23,7 +19,8 @@
                ("M-/"     . ivy-erlang-complete-find-references)))
   :hook ((after-save  . ivy-erlang-complete-reparse)
          (erlang-mode . ivy-erlang-complete-init)
-         (erlang-mode . flycheck-mode))
+         (erlang-mode . flycheck-mode)
+         (erlang-mode . wrangler-menu-init))
   :custom ((ivy-erlang-complete-erlang-root "~/.kerl/installations/21.2/")
            (ivy-erlang-complete-ignore-dirs '(".git"))
            (erlang-root-dir                 "~/.kerl/builds/21.2/release_21.2/")
@@ -32,6 +29,10 @@
 	         (erlang-tab-always-indent        nil))
   :init
   (add-to-list 'exec-path "~/.kerl/builds/21.2/release_21.2/bin"))
+
+(use-package wrangler
+  :custom (erlang-xemacs-p nil)
+  :load-path "/usr/local/lib/erlang/lib/wrangler-1.2.0/elisp")
 
 ;;;;;;;;;;;;;;;
 ;; Flycheck
