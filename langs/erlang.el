@@ -16,30 +16,21 @@
               (("C-c b"   . erlang/wrap-word-into-binary)
 	             ("C-c m b" . erlang/wrap-multiline-into-binary)
                ("C-c ;"   . ivy-erlang-complete)
-               ("M-/"     . ivy-erlang-complete-find-references)))
+               ("M-/"     . ivy-erlang-complete-find-references)
+               ("M-."     . ivy-erlang-complete-find-definition)
+               ("M-,"     . xref-pop-marker-stack)))
   :hook ((after-save  . ivy-erlang-complete-reparse)
          (erlang-mode . ivy-erlang-complete-init)
-         (erlang-mode . flycheck-mode)
-         (erlang-mode . wrangler-menu-init))
+         (erlang-mode . flycheck-mode))
+;         (erlang-mode . wrangler-menu-init))
   :custom ((ivy-erlang-complete-erlang-root "~/.kerl/installations/21.2/")
-           (ivy-erlang-complete-ignore-dirs '(".git"))
+           (ivy-erlang-complete-ignore-dirs '(".git" "_build/test/logs" "_build/test/lib/portal" "_build/default/lib/portal"))
            (erlang-root-dir                 "~/.kerl/builds/21.2/release_21.2/")
            (indent-tabs-mode                nil)
            (erlang-indent-level             2)
 	         (erlang-tab-always-indent        nil))
   :init
-  (add-to-list 'exec-path "~/.kerl/builds/21.2/release_21.2/bin"))
-
-(use-package wrangler
-  :custom (erlang-xemacs-p nil)
-  :load-path "/usr/local/lib/erlang/lib/wrangler-1.2.0/elisp")
-
-;;;;;;;;;;;;;;;
-;; Flycheck
-;;;;;;;;;;;;;;;
-
-(use-package flycheck
-  :init
+  (add-to-list 'exec-path "~/.kerl/builds/21.2/release_21.2/bin")
   (require 'flycheck)
   (flycheck-define-checker erlang-otp
     "Erang/OTP syntax checker"
@@ -47,7 +38,14 @@
     :error-patterns
     ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
      (error line-start (file-name) ":" line ": " (message) line-end))
-    :modes (erlang-mode)))
+    :modes (erlang-mode))
+  (add-to-list 'flycheck-checkers 'erlang-otp)
+  (add-to-list 'flycheck-disabled-checkers '(erlang erlang-rebar3))
+  (flycheck-may-enable-checker 'erlang-otp))
+
+;(use-package wrangler
+;  :custom (erlang-xemacs-p nil)
+;  :load-path "/usr/local/lib/erlang/lib/wrangler-1.2.0/elisp")
 
 ;;;;;;;;;;;;;;;
 ;; Helpers

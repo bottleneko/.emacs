@@ -14,7 +14,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (evil-lion code-stats counsel ivy ivy-erlang-complete magit dashboard flyspell-correct-ivy all-the-icons-ivy counsel-projectile ivy-gitlab ivy-xref ivy-yasnippet company company-web use-package xclip latex-pretty-symbols latex-preview-pane dockerfile-mode haskell-mode rust-mode evil bash-completion markdown-mode markdown-preview-mode ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang))))
+    (ensime json-mode php-mode evil-lion code-stats counsel ivy ivy-erlang-complete magit dashboard flyspell-correct-ivy all-the-icons-ivy counsel-projectile ivy-gitlab ivy-xref ivy-yasnippet company company-web use-package xclip latex-pretty-symbols latex-preview-pane dockerfile-mode haskell-mode rust-mode evil bash-completion markdown-mode markdown-preview-mode ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -46,7 +46,7 @@
 
 (defun trim-string (string)
   "Remove white spaces in beginning and ending of STRING.
-White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
+White space here is any of: space, tab, Emacs newline (line feed, ASCII 10)."
   (replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string "[ \t\n]*\\'" "" string)))
 
 (use-package exec-path-from-shell
@@ -122,8 +122,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (counsel-projectile-mode +1))
 
 (use-package iedit
-  :bind (("C-c C-r a" . iedit-mode-toggle-on-function)
-         ("C-c C-r :" . iedit-mode)))
+  :bind (("C-x C-a ;" . iedit-mode-toggle-on-function)
+         ("C-x C-a :" . iedit-mode)))
 
 (use-package neotree
   :bind ([f8] . neotree-toggle)
