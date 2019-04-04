@@ -34,7 +34,7 @@
   (require 'flycheck)
   (flycheck-define-checker erlang-otp
     "Erang/OTP syntax checker"
-    :command ("~/.emacs.d/git-packages/syntaxerl/syntaxerl" source)
+    :command ("~/.emacs.d/git-packages/syntaxerl/syntaxerl" source-inplace)
     :error-patterns
     ((warning line-start (file-name) ":" line ": Warning:" (message) line-end)
      (error line-start (file-name) ":" line ": " (message) line-end))
