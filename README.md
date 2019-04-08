@@ -1,4 +1,7 @@
 # My Emacs settings
+![Travis CI](https://travis-ci.org/bottleneko/.emacs.d.svg?branch=master)
+---
+
 
 ## OS
 
@@ -14,7 +17,7 @@ Requirements:
 
 ```sh
 mv ~/.emacs.d ~/.emacs.d.bak
-git clone https://github.com/bottleneko/bottleneko-emacs.git ~/.emacs.d
+git clone https://github.com/bottleneko/.emacs.d.git ~/.emacs.d
 cd ~/.emacs.d/
 git submodule update --recursive
 ```

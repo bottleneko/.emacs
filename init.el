@@ -1,10 +1,9 @@
 ;;;;;;;;;;;;;;;
 ;; Packages
 ;;;;;;;;;;;;;;;
-
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (package-initialize)
 
 (custom-set-variables
@@ -21,6 +20,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install-selected-packages))
 
 (eval-when-compile
   (require 'use-package))
