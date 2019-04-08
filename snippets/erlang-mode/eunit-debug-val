@@ -1,4 +1,4 @@
 # -*- mode: snippet -*-
-# name: debug-val
+# name: eunit-debug-val
 # --
 ?debugVal($1)
