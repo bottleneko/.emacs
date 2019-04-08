@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: eunit-debug-here
+# --
+?debugHere

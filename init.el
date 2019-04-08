@@ -156,6 +156,11 @@ White space here is any of: space, tab, Emacs newline (line feed, ASCII 10)."
 
 (global-auto-revert-mode +1)
 
+(use-package yasnippet
+  :custom (yas-snippet-dirs '("~/.emacs.d/snippets"))
+  :init
+  (yas-global-mode +1))
+
 ;;;;;;;;;;;;;;;
 ;; Langs
 ;;;;;;;;;;;;;;;

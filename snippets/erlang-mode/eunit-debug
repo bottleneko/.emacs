@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: eunit-debug
+# --
+-define(EUNIT_DEBUG_VAL_DEPTH, 1500).
+-include_lib("eunit/include/eunit.hrl").
