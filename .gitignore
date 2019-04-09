@@ -3,6 +3,7 @@ ac-comphist.dat
 projectile-bookmarks.eld
 recentf
 bookmarks
+.lsp-session-*
 
 auto-save-list/
 auto-save/
