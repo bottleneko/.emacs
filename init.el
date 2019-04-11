@@ -13,7 +13,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (racer flycheck-rust lsp-scala lsp-ui cargo auto-org-md ensime json-mode php-mode evil-lion code-stats counsel ivy ivy-erlang-complete magit dashboard flyspell-correct-ivy all-the-icons-ivy counsel-projectile ivy-gitlab ivy-xref ivy-yasnippet company company-web use-package xclip latex-pretty-symbols latex-preview-pane dockerfile-mode haskell-mode rust-mode evil bash-completion markdown-mode markdown-preview-mode ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang))))
+    (gitlab-ci-mode racer flycheck-rust lsp-scala lsp-ui cargo auto-org-md ensime json-mode php-mode evil-lion code-stats counsel ivy ivy-erlang-complete magit dashboard flyspell-correct-ivy all-the-icons-ivy counsel-projectile ivy-gitlab ivy-xref ivy-yasnippet company company-web use-package xclip latex-pretty-symbols latex-preview-pane dockerfile-mode haskell-mode rust-mode evil bash-completion markdown-mode markdown-preview-mode ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -124,6 +124,59 @@ White space here is any of: space, tab, Emacs newline (line feed, ASCII 10)."
   (counsel-mode +1)
   (counsel-projectile-mode +1))
 
+(define-key counsel-find-file-map (kbd "C-x C-f") 'counsel-find-file-fallback-command)
+
+(defun counsel-find-file-fallback-command ()
+  "Fallback to non-counsel version of current command."
+  (interactive)
+  (when (bound-and-true-p ivy-mode)
+    (ivy-mode -1)
+    (add-hook 'minibuffer-setup-hook
+              'counsel-find-file-fallback-command--enable-ivy))
+  (ivy-set-action
+   (lambda (current-path)
+     (let ((old-default-directory default-directory))
+       (let ((i (length current-path)))
+         (while (> i 0)
+           (push (aref current-path (setq i (1- i))) unread-command-events)))
+       (let ((default-directory "")) (call-interactively 'find-file))
+       (setq default-directory old-default-directory))))
+  (ivy-done))
+
+(defun counsel-find-file-fallback-command--enable-ivy ()
+  (remove-hook 'minibuffer-setup-hook
+               'counsel-find-file-fallback-command--enable-ivy)
+  (ivy-mode t))
+
+(define-key ivy-minibuffer-map (kbd "C-x C-f") 'minibuffer-ivy-fallback)
+
+(defun minibuffer-ivy-fallback ()
+  "Fallback to non ivy version of current command."
+  (interactive)
+  (when (bound-and-true-p ivy-mode)
+    (ivy-mode -1)
+    (add-hook 'minibuffer-setup-hook
+              'minibuffer-ivy-fallback--enable-ivy))
+  (ivy-set-action
+   (lambda (current-path)
+     (let ((old-default-directory default-directory))
+       (when (not (member last-command '(
+                                         dired-create-directory
+                                         dired-do-copy
+                                         dired-do-rename
+                                         )))
+         (let ((i (length current-path)))
+           (while (> i 0)
+             (push (aref current-path (setq i (1- i))) unread-command-events))))
+       (let ((default-directory "")) (call-interactively last-command))
+       (setq default-directory old-default-directory))))
+  (ivy-done))
+
+(defun minibuffer-ivy-fallback--enable-ivy  ()
+  (remove-hook 'minibuffer-setup-hook
+               'minibuffer-ivy-fallback--enable-ivy )
+  (ivy-mode t))
+
 (use-package iedit
   :bind (("C-x C-a ;" . iedit-mode-toggle-on-function)
          ("C-x C-a :" . iedit-mode)))
@@ -163,6 +216,12 @@ White space here is any of: space, tab, Emacs newline (line feed, ASCII 10)."
   :custom (yas-snippet-dirs '("~/.emacs.d/snippets"))
   :init
   (yas-global-mode +1))
+
+(use-package gitlab
+  :if (getenv "GITLAB_HOST")
+  :custom
+  (gitlab-host (getenv "GITLAB_HOST"))
+  (gitlab-token-id (getenv "GITLAB_TOKEN")))
 
 ;;;;;;;;;;;;;;;
 ;; Langs
