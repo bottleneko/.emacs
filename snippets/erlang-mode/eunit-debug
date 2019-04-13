@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: eunit-debug
+# name: ied
 # --
 -define(EUNIT_DEBUG_VAL_DEPTH, 1500).
 -include_lib("eunit/include/eunit.hrl").

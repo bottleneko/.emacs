@@ -4,9 +4,11 @@ projectile-bookmarks.eld
 recentf
 bookmarks
 .lsp-session-*
+.*.el
 
 auto-save-list/
 auto-save/
 backups/
 elpa/
 transient/
+eshell/
