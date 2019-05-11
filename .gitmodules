@@ -1,3 +1,7 @@
 [submodule "git-packages/syntaxerl"]
 	path = git-packages/syntaxerl
 	url = https://github.com/ten0s/syntaxerl.git
+[submodule "git-packages/kubernetes-el"]
+	path = git-packages/kubernetes-el
+	url = https://github.com/chrisbarrett/kubernetes-el.git
+	branch = master
