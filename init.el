@@ -85,7 +85,7 @@ White space here is any of: space, tab, Emacs newline (line feed, ASCII 10)."
   (setq interprogram-paste-function 'copy-from-osx))
 
 (use-package xclip
-  :unless (memq window-system '(mac ns))
+  :if (executable-find "xclip")
   :init
   (xclip-mode 1))
 
