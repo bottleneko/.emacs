@@ -13,7 +13,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (doom-modeline elnode docker-tramp gitlab-ci-mode racer flycheck-rust lsp-scala lsp-ui cargo auto-org-md ensime json-mode php-mode evil-lion code-stats counsel ivy ivy-erlang-complete magit magit-popup dashboard flyspell-correct-ivy all-the-icons-ivy counsel-projectile ivy-gitlab ivy-xref ivy-yasnippet company company-web use-package xclip latex-pretty-symbols latex-preview-pane dockerfile-mode haskell-mode rust-mode evil bash-completion markdown-mode markdown-preview-mode ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang))))
+    (nix-mode doom-modeline elnode docker-tramp gitlab-ci-mode racer flycheck-rust lsp-scala lsp-ui cargo auto-org-md ensime json-mode php-mode evil-lion code-stats counsel ivy ivy-erlang-complete magit magit-popup dashboard flyspell-correct-ivy all-the-icons-ivy counsel-projectile ivy-gitlab ivy-xref ivy-yasnippet company company-web use-package xclip latex-pretty-symbols latex-preview-pane dockerfile-mode haskell-mode rust-mode evil bash-completion markdown-mode markdown-preview-mode ansible ansible-doc bind-key iedit switch-buffer-functions neotree flycheck-tip eclim flycheck doom-themes ample-theme projectile exec-path-from-shell ssh-config-mode rainbow-delimiters k8s-mode erlang))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -55,7 +55,7 @@ White space here is any of: space, tab, Emacs newline (line feed, ASCII 10)."
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
   :init
-  (setenv "SHELL" (trim-string (shell-command-to-string "type zsh | awk '{ print $3 }'"))))
+  (setenv "SHELL" (executable-find "zsh")))
 
 (use-package prog-mode
   :custom
